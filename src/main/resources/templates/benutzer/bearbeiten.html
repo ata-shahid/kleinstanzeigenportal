@@ -1,0 +1,69 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Benutzer bearbeiten</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <h1>Benutzer <span th:text="${loginname}">xyz</span> bearbeiten...</h1>
+
+      <form
+        class="form-container"
+        th:action="@{/admin/benutzer/{ln}(ln=${loginname})}"
+        method="POST"
+      >
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input id="name" type="text" name="name" />
+        </div>
+
+        <div class="form-row">
+          <label for="email">E-Mail</label>
+          <input id="email" type="email" name="email" />
+        </div>
+
+        <div class="form-row">
+          <label for="adresse">Adresse</label>
+          <input id="adresse" type="text" name="adresse" />
+        </div>
+
+        <div class="form-row">
+          <label for="rolle">Rolle</label>
+          <select id="rolle" name="rolle">
+            <option value="">-- bitte wählen --</option>
+            <option value="ADMINISTRATOR">Administrator</option>
+            <option value="ANBIETER">Anbieter</option>
+            <option value="TESTER">Tester</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="passwort">Passwort</label>
+          <input id="passwort" type="password" name="passwort" />
+        </div>
+
+        <div class="form-row">
+          <label for="passwortWiederholung">Passwort (Wiederholung)</label>
+          <input
+            id="passwortWiederholung"
+            type="password"
+            name="passwortWiederholung"
+          />
+        </div>
+
+        <div class="checkbox-row">
+          <input id="aktiviert" type="checkbox" name="aktiviert" />
+          <label for="aktiviert">Aktiviert</label>
+        </div>
+
+        <div class="button-row">
+          <button id="cancel-btn" type="button">Abbruch</button>
+          <button id="ok-btn" type="submit">OK</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
