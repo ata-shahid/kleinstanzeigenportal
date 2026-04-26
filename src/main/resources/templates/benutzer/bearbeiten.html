@@ -14,25 +14,26 @@
         class="form-container"
         th:action="@{/admin/benutzer/{ln}(ln=${loginname})}"
         method="POST"
+        th:object="${formular}"
       >
         <div class="form-row">
           <label for="name">Name</label>
-          <input id="name" type="text" name="name" />
+          <input type="text" th:field="*{name}" />
         </div>
 
         <div class="form-row">
           <label for="email">E-Mail</label>
-          <input id="email" type="email" name="email" />
+          <input type="email" th:field="*{email}" />
         </div>
 
         <div class="form-row">
           <label for="adresse">Adresse</label>
-          <input id="adresse" type="text" name="adresse" />
+          <input type="text" th:field="*{adresse}" />
         </div>
 
         <div class="form-row">
           <label for="rolle">Rolle</label>
-          <select id="rolle" name="rolle">
+          <select th:field="*{rolle}">
             <option value="">-- bitte wählen --</option>
             <option value="ADMINISTRATOR">Administrator</option>
             <option value="ANBIETER">Anbieter</option>
@@ -42,20 +43,16 @@
 
         <div class="form-row">
           <label for="passwort">Passwort</label>
-          <input id="passwort" type="password" name="passwort" />
+          <input type="password" th:field="*{passwort}" />
         </div>
 
         <div class="form-row">
           <label for="passwortWiederholung">Passwort (Wiederholung)</label>
-          <input
-            id="passwortWiederholung"
-            type="password"
-            name="passwortWiederholung"
-          />
+          <input type="password" th:field="*{passwortWiederholung}" />
         </div>
 
         <div class="checkbox-row">
-          <input id="aktiviert" type="checkbox" name="aktiviert" />
+          <input type="checkbox" th:field="*{aktiviert}" />
           <label for="aktiviert">Aktiviert</label>
         </div>
 

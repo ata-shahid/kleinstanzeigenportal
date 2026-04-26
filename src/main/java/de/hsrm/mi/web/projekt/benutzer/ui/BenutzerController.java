@@ -16,13 +16,17 @@ public class BenutzerController {
     // GET handler
     @GetMapping("/admin/benutzer/{loginname}")
     public String showUserForm(
-            @PathVariable String loginname,
+            @PathVariable("loginname") String loginName,
             Model model) {
 
-        logger.info("GET /admin/benutzer/{}", loginname);
+        logger.info("GET /admin/benutzer/{}", loginName);
+
+        //Creating BenutzerFormular object here to add data
+        BenutzerFormular benutzerFormular=new BenutzerFormular();
 
 
-        model.addAttribute("loginname", loginname);
+        model.addAttribute("loginname", loginName);
+        model.addAttribute("formular",benutzerFormular);
 
 
         return "benutzer/bearbeiten";
