@@ -116,3 +116,14 @@ h1 {
 #ok-btn:hover {
   background-color: #0077ed;
 }
+
+.form-row input.error-field {
+  border: 2px solid red;
+}
+
+.error-text {
+  color: #c62b2b;
+  font-size: 0.9rem;
+  margin-top: 6px;
+  display: block;
+}

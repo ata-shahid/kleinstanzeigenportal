@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.validation.BindingResult;
+
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -58,7 +61,8 @@ public class BenutzerController {
     //POST handler
     @PostMapping("/admin/benutzer/{loginname}")
     public String postUserForm(@PathVariable("loginname") String loginName,
-    @ModelAttribute("formular") BenutzerFormular benutzerFormular,
+    @Valid @ModelAttribute("formular") BenutzerFormular benutzerFormular,
+    BindingResult bindingResult,
     @ModelAttribute("formularMap") Map<String, BenutzerFormular> benutzerFormularMap,
     Model model) {
 
@@ -67,12 +71,19 @@ public class BenutzerController {
         logger.info("POST /admin/benutzer/{}", loginName);
         logger.info("Formular: {}", benutzerFormular);
 
-        //update in the Map
+        // If validation failed, return the form view so errors can be shown
+        if (bindingResult.hasErrors()) {
+            logger.info("Validation errors: {}", bindingResult.getAllErrors());
+            model.addAttribute("loginname", loginName);
+            model.addAttribute("formular", benutzerFormular);
+            return "benutzer/bearbeiten";
+        }
+
+        // update in the Map
         benutzerFormularMap.put(loginName, benutzerFormular);
 
-        model.addAttribute("loginname",loginName);
-        model.addAttribute("formular",benutzerFormular);
-
+        model.addAttribute("loginname", loginName);
+        model.addAttribute("formular", benutzerFormular);
 
         return "benutzer/bearbeiten";
     }

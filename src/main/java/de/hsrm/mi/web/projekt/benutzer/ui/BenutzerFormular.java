@@ -1,8 +1,16 @@
 package de.hsrm.mi.web.projekt.benutzer.ui;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class BenutzerFormular {
 
+
+    @NotBlank @Size(min = 3,max = 60)
     private String name = "";
+
+    @Email
     private String email = "";
     private String adresse = "";
     private String rolle = "";
