@@ -13,7 +13,7 @@ import jakarta.validation.Payload;
 @Constraint(validatedBy = GutesPasswortValidator.class)
 public @interface GutesPasswort {
 
-    String message() default "Passwort ist nicht entsprechend";
+    String message() default "{benutzer.fehler.passwortungeeignet}";
 
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

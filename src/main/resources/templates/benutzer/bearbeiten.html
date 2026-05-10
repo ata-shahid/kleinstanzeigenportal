@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Benutzer bearbeiten</title>
+    <title th:text="#{benutzer.bearbeiten.titel(${loginname})}">
+      Benutzer bearbeiten
+    </title>
     <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css" />
   </head>
   <body>
     <div class="main-container">
-      <h1>Benutzer <span th:text="${loginname}">xyz</span> bearbeiten...</h1>
+      <h1 th:text="#{benutzer.bearbeiten.titel(${loginname})}">
+        Benutzer xyz bearbeiten...
+      </h1>
 
       <form
         class="form-container"
@@ -17,7 +21,7 @@
         th:object="${formular}"
       >
         <div class="form-row">
-          <label for="name">Name</label>
+          <label for="name" th:text="#{benutzer.name}">Name</label>
           <input type="text" th:field="*{name}" th:errorclass="error-field" />
           <span
             class="error-text"
@@ -27,7 +31,7 @@
         </div>
 
         <div class="form-row">
-          <label for="email">E-Mail</label>
+          <label for="email" th:text="#{benutzer.email}">E-Mail</label>
           <input type="text" th:field="*{email}" th:errorclass="error-field" />
           <span
             class="error-text"
@@ -37,22 +41,28 @@
         </div>
 
         <div class="form-row">
-          <label for="adresse">Adresse</label>
+          <label for="adresse" th:text="#{benutzer.adresse}">Adresse</label>
           <input type="text" th:field="*{adresse}" />
         </div>
 
         <div class="form-row">
-          <label for="rolle">Rolle</label>
+          <label for="rolle" th:text="#{benutzer.rolle}">Rolle</label>
           <select th:field="*{rolle}">
-            <option value="">-- bitte wählen --</option>
-            <option value="ADMINISTRATOR">Administrator</option>
-            <option value="ANBIETER">Anbieter</option>
-            <option value="TESTER">Tester</option>
+            <option value="">--</option>
+            <option value="ADMINISTRATOR" th:text="#{benutzer.rolle.admin}">
+              Administrator
+            </option>
+            <option value="ANBIETER" th:text="#{benutzer.rolle.kunde}">
+              Anbieter
+            </option>
+            <option value="TESTER" th:text="#{benutzer.rolle.gesperrt}">
+              Tester
+            </option>
           </select>
         </div>
 
         <div class="form-row">
-          <label for="passwort">Passwort</label>
+          <label for="passwort" th:text="#{benutzer.losung}">Passwort</label>
           <input
             type="password"
             th:field="*{passwort}"
@@ -66,7 +76,9 @@
         </div>
 
         <div class="form-row">
-          <label for="passwortWiederholung">Passwort (Wiederholung)</label>
+          <label for="passwortWiederholung" th:text="#{benutzer.losungwh}"
+            >Passwort (Wiederholung)</label
+          >
           <input
             type="password"
             th:field="*{passwortWiederholung}"

@@ -1,0 +1,13 @@
+propertyname;en;de;nl
+benutzer.name;Name;Name;Naam
+benutzer.email;E-Mail;E-Mail;E-mailadres
+benutzer.adresse;Adress;Addresse;adres
+benutzer.rolle;Role;Rolle;Rol
+benutzer.rolle.admin;admin;Admin;admin
+benutzer.rolle.kunde;customer;Kunde;klant
+benutzer.rolle.gesperrt;blocked;gesperrt;geblokkeerd
+benutzer.losung;Password;Losung;Wachtwoord
+benutzer.losungwh;Repeat password;Losung (Wiederh.);Wachtwoord (herhaling)
+benutzer.fehler.passwortungeeignet;password suboptimal;Passwort ist nicht entsprechend;dit wachtwoord is echt ongeschikt
+benutzer.fehler.passwortwiederholung;passwords do not match;Passworteingaben stimmen nicht überein;wachtwoorden verschillen onderling
+benutzer.bearbeiten.titel;Edit user {0};Benutzer {0} bearbeiten;Gebruikersprofiel {0} bewerken
