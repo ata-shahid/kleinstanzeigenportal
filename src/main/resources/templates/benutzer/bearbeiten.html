@@ -53,12 +53,30 @@
 
         <div class="form-row">
           <label for="passwort">Passwort</label>
-          <input type="password" th:field="*{passwort}" />
+          <input
+            type="password"
+            th:field="*{passwort}"
+            th:errorclass="error-field"
+          />
+          <span
+            class="error-text"
+            th:if="${#fields.hasErrors('passwort')}"
+            th:errors="*{passwort}"
+          ></span>
         </div>
 
         <div class="form-row">
           <label for="passwortWiederholung">Passwort (Wiederholung)</label>
-          <input type="password" th:field="*{passwortWiederholung}" />
+          <input
+            type="password"
+            th:field="*{passwortWiederholung}"
+            th:errorclass="error-field"
+          />
+          <span
+            class="error-text"
+            th:if="${#fields.hasErrors('passwortWiederholung')}"
+            th:errors="*{passwortWiederholung}"
+          ></span>
         </div>
 
         <div class="checkbox-row">

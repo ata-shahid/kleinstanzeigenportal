@@ -1,5 +1,6 @@
 package de.hsrm.mi.web.projekt.benutzer.ui;
 
+import de.hsrm.mi.web.projekt.benutzer.validators.GutesPasswort;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -14,6 +15,8 @@ public class BenutzerFormular {
     private String email = "";
     private String adresse = "";
     private String rolle = "";
+
+    @GutesPasswort
     private String passwort = "";
     private String passwortWiederholung = "";
     private boolean aktiviert = false;

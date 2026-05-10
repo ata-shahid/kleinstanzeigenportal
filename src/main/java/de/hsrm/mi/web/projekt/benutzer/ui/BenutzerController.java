@@ -71,6 +71,20 @@ public class BenutzerController {
         logger.info("POST /admin/benutzer/{}", loginName);
         logger.info("Formular: {}", benutzerFormular);
 
+
+        // Password repeat check logic
+        if (!benutzerFormular.getPasswort().isEmpty() || !benutzerFormular.getPasswortWiederholung().isEmpty()) {
+
+            if (!benutzerFormular.getPasswort().equals(benutzerFormular.getPasswortWiederholung())) {
+                logger.info("Passwort und Wiederholung stimmen nicht überein für {}", loginName);
+                bindingResult.rejectValue(
+                "passwortWiederholung",
+                "benutzer.fehler.passwortwiederholung",
+                "Passworteingaben stimmen nicht überein"
+        );
+    }
+}
+
         // If validation failed, return the form view so errors can be shown
         if (bindingResult.hasErrors()) {
             logger.info("Validation errors: {}", bindingResult.getAllErrors());
