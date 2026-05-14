@@ -9,6 +9,7 @@
     <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css" />
   </head>
   <body>
+    <header th:replace="~{fragments/kopffuss :: kopf}"></header>
     <div class="main-container">
       <h1 th:text="#{benutzer.bearbeiten.titel(${loginname})}">
         Benutzer xyz bearbeiten...
@@ -102,5 +103,6 @@
         </div>
       </form>
     </div>
+    <footer th:replace="~{fragments/kopffuss :: fuss}"></footer>
   </body>
 </html>
