@@ -2,22 +2,23 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <body>
-    <header th:fragment="kopf" class="kopf" xmlns:th="http://www.thymeleaf.org">
+    <!--Kopf fragment-->
+    <header th:fragment="kopf" class="kopf">
       <div class="kopf-container">
         <div class="brandname-container">
           <h1 class="company-name">Kleinstanzeigen</h1>
         </div>
         <div class="navbar">
           <div class="langs">
-            <a href="">DE</a>
-            <a href="">EN</a>
-            <a href="">NL</a>
+            <a th:href="@{?sprache=de}">DE</a>
+            <a th:href="@{?sprache=en}">EN</a>
+            <a th:href="@{?sprache=nl}">NL</a>
           </div>
         </div>
       </div>
     </header>
-
-    <footer th:fragment="fuss" class="fuss" xmlns:th="http://www.thymeleaf.org">
+    <!--Fuss fragment-->
+    <footer th:fragment="fuss" class="fuss">
       <div class="fuss-container">
         <p class="fuss-text">
           &copy; 2026 Webbasierte Anwendungen. All rights reserved.
