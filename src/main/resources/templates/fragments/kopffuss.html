@@ -1,23 +1,28 @@
 <!-- Kopf und Fuss Fragments-->
-<header th:fragment="kopf" class="kopf" xmlns:th="http://www.thymeleaf.org">
-  <div class="kopf-container">
-    <div class="brandname-container">
-      <h1 class="company-name">Kleinstanzeigen</h1>
-    </div>
-    <div class="navbar">
-      <div class="langs">
-        <a href="">DE</a>
-        <a href="">EN</a>
-        <a href="">NL</a>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <header th:fragment="kopf" class="kopf" xmlns:th="http://www.thymeleaf.org">
+      <div class="kopf-container">
+        <div class="brandname-container">
+          <h1 class="company-name">Kleinstanzeigen</h1>
+        </div>
+        <div class="navbar">
+          <div class="langs">
+            <a href="">DE</a>
+            <a href="">EN</a>
+            <a href="">NL</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</header>
+    </header>
 
-<footer th:fragment="fuss" class="fuss" xmlns:th="http://www.thymeleaf.org">
-  <div class="fuss-container">
-    <p class="fuss-text">
-      &copy; 2026 Webbasierte Anwendungen. All rights reserved.
-    </p>
-  </div>
-</footer>
+    <footer th:fragment="fuss" class="fuss" xmlns:th="http://www.thymeleaf.org">
+      <div class="fuss-container">
+        <p class="fuss-text">
+          &copy; 2026 Webbasierte Anwendungen. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
