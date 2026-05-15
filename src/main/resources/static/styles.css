@@ -135,6 +135,8 @@ h1 {
 }
 
 .kopf-container {
+  display: flex;
+  justify-content: space-between;
   max-width: 680px;
   margin: 0 auto;
   padding: 0 24px;
@@ -170,4 +172,14 @@ h1 {
   font-size: 14px;
   text-align: center;
   margin: 0;
+}
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.langs {
+  display: flex;
+  gap: 16px;
 }
