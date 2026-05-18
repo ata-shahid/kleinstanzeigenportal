@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 public class BenutzerController {
 
     // Logger
-    Logger logger = LoggerFactory.getLogger(BenutzerController.class);
+     private static final Logger logger = LoggerFactory.getLogger(BenutzerController.class);
 
     //Make empty map at the start of the session
     @ModelAttribute("formularMap")
