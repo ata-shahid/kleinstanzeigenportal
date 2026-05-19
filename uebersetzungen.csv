@@ -6,8 +6,20 @@ benutzer.rolle;Role;Rolle;Rol
 benutzer.rolle.admin;admin;Admin;admin
 benutzer.rolle.kunde;customer;Kunde;klant
 benutzer.rolle.gesperrt;blocked;gesperrt;geblokkeerd
-benutzer.losung;Password;Losung;Wachtwoord
-benutzer.losungwh;Repeat password;Losung (Wiederh.);Wachtwoord (herhaling)
+benutzer.losung;Password;Passwort;Wachtwoord
+benutzer.losungwh;Repeat password;Passwort (Wiederh.);Wachtwoord (herhaling)
 benutzer.fehler.passwortungeeignet;password suboptimal;Passwort ist nicht entsprechend;dit wachtwoord is echt ongeschikt
 benutzer.fehler.passwortwiederholung;passwords do not match;Passworteingaben stimmen nicht überein;wachtwoorden verschillen onderling
 benutzer.bearbeiten.titel;Edit user {0};Benutzer {0} bearbeiten;Gebruikersprofiel {0} bewerken
+
+benutzer.liste.titel;User List;Benutzerliste;Lijst van alle gebruikers
+benutzer.liste.spalte.loginname;Login;Login;Inlognaam
+benutzer.liste.spalte.name;Name;Name;Naam
+benutzer.liste.spalte.email;E-Mail;E-Mail;E-mailadres
+benutzer.liste.spalte.rolle;Role;Rolle;Rol
+benutzer.liste.spalte.bearbeiten;edit;bearbeiten;bewerken
+benutzer.liste.spalte.loeschen;delete;löschen;wissen
+
+benutzer.liste.zeile.ok;ok;ok;ok
+benutzer.liste.zeile.abbrechen;cancel;abbrechen;annuleren
+

@@ -16,6 +16,10 @@
           </div>
         </div>
       </div>
+      <!-- Error message -->
+      <div th:if="${info}" class="benutzer-exception-container">
+        <p th:text="${info}" class="exception-text"></p>
+      </div>
     </header>
     <!--Fuss fragment-->
     <footer th:fragment="fuss" class="fuss">

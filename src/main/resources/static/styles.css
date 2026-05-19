@@ -183,3 +183,19 @@ h1 {
   display: flex;
   gap: 16px;
 }
+
+.benutzer-exception-container {
+  max-width: 680px;
+  margin: 16px auto 0;
+  padding: 8px 12px;
+  border: 1px solid #f3b4b4;
+  color: #a12a2a;
+  background-color: #fff3f3;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.exception-text {
+  font-size: 16px;
+  margin: 0;
+}
