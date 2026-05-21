@@ -175,13 +175,37 @@ h1 {
 }
 .navbar {
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex: 1;
+}
+
+.nav-links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.benutzer-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 24px;
+  background-color: #f5f5f7;
+  color: #1d1d1f;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.benutzer-link:hover {
+  background-color: #e8e8ed;
+  color: #000000;
 }
 
 .langs {
   display: flex;
   gap: 16px;
+  margin-left: auto;
 }
 
 .benutzer-exception-container {
@@ -198,4 +222,57 @@ h1 {
 .exception-text {
   font-size: 16px;
   margin: 0;
+}
+
+/* Benutzerliste */
+.benutzer-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.benutzer-table th,
+.benutzer-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e9e9eb;
+}
+
+.benutzer-table th {
+  font-size: 14px;
+  color: #6e6e73;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: #0071e3;
+  color: #ffffff;
+}
+
+.edit-btn:hover {
+  background-color: #0077ed;
+}
+
+.delete-btn {
+  background-color: #f5f5f7;
+  color: #c62b2b;
+  border: 1px solid #c62b2b;
+}
+
+.delete-btn:hover {
+  background-color: #ffe5e5;
 }

@@ -1,0 +1,50 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="#{benutzer.liste.titel}">Benutzerliste</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css" />
+  </head>
+  <body>
+    <header th:replace="~{fragments/kopffuss :: kopf}"></header>
+    <div class="main-container">
+      <h1 th:text="#{benutzer.liste.titel}">Benutzerliste</h1>
+
+      <table class="benutzer-table">
+        <thead>
+          <tr>
+            <th th:text="#{benutzer.liste.spalte.loginname}">Login</th>
+            <th th:text="#{benutzer.liste.spalte.name}">Name</th>
+            <th th:text="#{benutzer.liste.spalte.email}">E-Mail</th>
+            <th th:text="#{benutzer.liste.spalte.rolle}">Rolle</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="benutzer : ${benutzerliste}">
+            <td th:text="${benutzer.loginName}">loginname</td>
+            <td th:text="${benutzer.name}">Name</td>
+            <td th:text="${benutzer.email}">email</td>
+            <td th:text="${benutzer.rolle}">Rolle</td>
+            <td class="action-buttons">
+              <a
+                th:href="@{/admin/benutzer/{ln}(ln=${benutzer.loginName})}"
+                th:text="#{benutzer.liste.spalte.bearbeiten}"
+                class="edit-btn"
+                >bearbeiten</a
+              >
+              <a
+                th:href="@{/admin/benutzer/{ln}/delete(ln=${benutzer.loginName})}"
+                th:text="#{benutzer.liste.spalte.loeschen}"
+                class="delete-btn"
+                >löschen</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer th:replace="~{fragments/kopffuss :: fuss}"></footer>
+  </body>
+</html>

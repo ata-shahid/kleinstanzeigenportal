@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import jakarta.validation.Valid;
 
 
+
 @Controller
 //@SessionAttributes("formularMap")
 public class BenutzerController {
@@ -72,7 +73,7 @@ public class BenutzerController {
         return "benutzer/bearbeiten";
     }*/
 
-    //GET Handler
+    //GET Handler to Show User Form
     @GetMapping("/admin/benutzer/{loginname}")
     public String showUserForm(@PathVariable("loginname") String loginName, Model model){
 
@@ -92,6 +93,21 @@ public class BenutzerController {
 
         return "benutzer/bearbeiten";
     }
+    //GET Handler to show useres list
+    @GetMapping("/admin/benutzer")
+    public String showBenutzerListe(Model model) {
+    model.addAttribute("benutzerliste", benutzerService.findAllBenutzer());
+    return "benutzer/liste";
+    }
+
+    //GET Handler to delete user and show the remaining list
+    @GetMapping("/admin/benutzer/{loginname}/delete")
+    public String deleteBenutzer(@PathVariable("loginname") String loginName) {
+    benutzerService.deleteBenutzerById(loginName);
+    return "redirect:/admin/benutzer";
+}
+
+
 
 
 
