@@ -5,12 +5,14 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.hsrm.mi.web.projekt.entities.benutzer.Benutzer;
 import de.hsrm.mi.web.projekt.entities.benutzer.mapper.BenutzerMapper;
@@ -24,6 +26,7 @@ import jakarta.validation.Valid;
 
 @Controller
 //@SessionAttributes("formularMap")
+@SessionAttributes("benutzerVersion")
 public class BenutzerController {
 
     // Logger
@@ -77,25 +80,31 @@ public class BenutzerController {
     @GetMapping("/admin/benutzer/{loginname}")
     public String showUserForm(@PathVariable("loginname") String loginName, Model model){
 
+        logger.info("GET /admin/benutzer/{}", loginName);
+
         BenutzerFormular formular= new BenutzerFormular();
         Optional<Benutzer> benutzer = benutzerService.findBenutzerById(loginName);
 
-        if(benutzer.isPresent()){
-            logger.info("User found: {}",loginName);
-            formular=benutzerMapper.benutzerToBenutzerFormular(benutzer.get());
-            model.addAttribute("loginname", loginName);
-            model.addAttribute("formular",formular);
-
-        }else{
-            model.addAttribute("loginname", loginName);
-            model.addAttribute("formular",formular);
+        if (benutzer.isPresent()) {
+        logger.info("User found in database: {}", loginName);
+        formular = benutzerMapper.benutzerToBenutzerFormular(benutzer.get());
+        model.addAttribute("benutzerVersion", benutzer.get().getVersion());
+        } else {
+        logger.info("User not found, creating empty form for: {}", loginName);
+        model.addAttribute("benutzerVersion", 0L);
         }
+
+
+        model.addAttribute("loginname", loginName);
+        model.addAttribute("formular",formular);
+
 
         return "benutzer/bearbeiten";
     }
     //GET Handler to show useres list
     @GetMapping("/admin/benutzer")
     public String showBenutzerListe(Model model) {
+    logger.info("GET /admin/benutzer");
     model.addAttribute("benutzerliste", benutzerService.findAllBenutzer());
     return "benutzer/liste";
     }
@@ -103,7 +112,9 @@ public class BenutzerController {
     //GET Handler to delete user and show the remaining list
     @GetMapping("/admin/benutzer/{loginname}/delete")
     public String deleteBenutzer(@PathVariable("loginname") String loginName) {
+    logger.info("GET /admin/benutzer/{}/delete", loginName);
     benutzerService.deleteBenutzerById(loginName);
+    logger.info("Deleted user: {}", loginName);
     return "redirect:/admin/benutzer";
 }
 
@@ -158,6 +169,7 @@ public class BenutzerController {
     // POST Handler
     @PostMapping("/admin/benutzer/{loginname}")
     public String postUserForm(@PathVariable("loginname") String loginName,
+    @ModelAttribute("benutzerVersion") long benutzerVersion,
     @Valid @ModelAttribute("formular") BenutzerFormular benutzerFormular,
     BindingResult bindingResult,
     Model model) {
@@ -192,6 +204,9 @@ public class BenutzerController {
         try {
             Benutzer benutzer = benutzerMapper.benutzerFormularToBenutzer(benutzerFormular);
             benutzer.setLoginName(loginName);
+            benutzer.setVersion(benutzerVersion);
+            logger.info("New version is set to: {}",benutzerVersion);
+
 
             if (benutzerFormular.getPasswort() == null || benutzerFormular.getPasswort().isEmpty()) {
                 logger.warn("Password is empty for the username: {}", loginName);
@@ -208,6 +223,10 @@ public class BenutzerController {
             try {
                 Benutzer savedUser = benutzerService.saveBenutzer(benutzer);
                 logger.info("User saved successfully: {} ", savedUser);
+                return "redirect:/admin/benutzer/" + loginName;
+            } catch (ObjectOptimisticLockingFailureException e) {
+                logger.warn("Optimistic locking failure for user {}: Data was modified by another user", loginName, e);
+                throw new BenutzerException("Fehler: Die Daten wurden von einem anderen Benutzer geändert.", e);
             } catch (DataAccessException e) {
                 logger.error("Unable to save user {}", loginName, e);
                 throw new BenutzerException("Schade, es gibt einen Fehler beim Abspeichern.", e);
@@ -218,10 +237,6 @@ public class BenutzerController {
             model.addAttribute("formular", benutzerFormular);
             return "benutzer/bearbeiten";
         }
-
-
-
-        return "benutzer/bearbeiten";
     }
 
 

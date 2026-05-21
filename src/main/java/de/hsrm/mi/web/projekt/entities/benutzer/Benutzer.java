@@ -3,6 +3,7 @@ package de.hsrm.mi.web.projekt.entities.benutzer;
 import de.hsrm.mi.web.projekt.benutzer.validators.GutesPasswort;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -35,6 +36,9 @@ public class Benutzer {
   private String passwort;
 
   private boolean aktiviert;
+
+  @Version
+  private long version;
 
   public Benutzer() {
   }
@@ -96,6 +100,16 @@ public class Benutzer {
   public void setAktiviert(boolean aktiviert) {
     this.aktiviert = aktiviert;
   }
+   public long getVersion() {
+    return version;
+  }
+
+
+
+  public void setVersion(long version) {
+    this.version = version;
+  }
+
 
   @Override
   public String toString() {
@@ -119,6 +133,10 @@ public class Benutzer {
   public int hashCode() {
     return Objects.hash(loginName);
   }
+
+
+
+
 
 
 }
