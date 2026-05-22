@@ -45,5 +45,5 @@ task uebersetzungenToProperties(type: Exec) {
 }
 
 tasks.named("processResources") {
-	finalizedBy("uebersetzungenToProperties")
+	dependsOn uebersetzungenToProperties
 }
