@@ -223,7 +223,7 @@ public class BenutzerController {
             try {
                 Benutzer savedUser = benutzerService.saveBenutzer(benutzer);
                 logger.info("User saved successfully: {} ", savedUser);
-                return "redirect:/admin/benutzer/" + loginName;
+                return "redirect:/admin/benutzer";
             } catch (ObjectOptimisticLockingFailureException e) {
                 logger.warn("Optimistic locking failure for user {}: Data was modified by another user", loginName, e);
                 throw new BenutzerException("Fehler: Die Daten wurden von einem anderen Benutzer geändert.", e);
