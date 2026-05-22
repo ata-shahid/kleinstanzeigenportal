@@ -25,7 +25,6 @@ import jakarta.validation.Valid;
 
 
 @Controller
-//@SessionAttributes("formularMap")
 @SessionAttributes("benutzerVersion")
 public class BenutzerController {
 
@@ -41,40 +40,6 @@ public class BenutzerController {
         this.benutzerService=benutzerService;
         this.benutzerMapper=benutzerMapper;
      }
-
-
-    //Make empty map at the start of the session (Depricated)
-    /*@ModelAttribute("formularMap")
-    public Map<String, BenutzerFormular> initFormularMap() {
-        logger.info("creating new formularMap");
-        return new HashMap<String, BenutzerFormular>();
-    }*/
-
-    // GET handler (Depricated)
-    /*@GetMapping("/admin/benutzer/{loginname}")
-    public String showUserForm(@PathVariable("loginname") String loginName,
-            @ModelAttribute("formularMap") Map<String, BenutzerFormular> benutzerFormularMap,
-            Model model) {
-
-        logger.info("GET /admin/benutzer/{}", loginName);
-
-        // If the name is not in the map, create the form and save it in the map
-        if(!benutzerFormularMap.containsKey(loginName)){
-
-            logger.info("creating form for {}",loginName);
-            benutzerFormularMap.put(loginName, new BenutzerFormular());
-
-        }
-        // get the correct form for the user
-        BenutzerFormular formular= benutzerFormularMap.get(loginName);
-
-        model.addAttribute("loginname", loginName);
-        model.addAttribute("formular",formular);
-
-
-
-        return "benutzer/bearbeiten";
-    }*/
 
     //GET Handler to Show User Form
     @GetMapping("/admin/benutzer/{loginname}")
@@ -117,54 +82,6 @@ public class BenutzerController {
     logger.info("Deleted user: {}", loginName);
     return "redirect:/admin/benutzer";
 }
-
-
-
-
-
-    //POST handler (Depricated)
-    /*@PostMapping("/admin/benutzer/{loginname}")
-    public String postUserForm(@PathVariable("loginname") String loginName,
-    @Valid @ModelAttribute("formular") BenutzerFormular benutzerFormular,
-    BindingResult bindingResult,
-    @ModelAttribute("formularMap") Map<String, BenutzerFormular> benutzerFormularMap,
-    Model model) {
-
-
-
-        logger.info("POST /admin/benutzer/{}", loginName);
-        logger.info("Formular: {}", benutzerFormular);
-
-
-        // Password repeat check logic
-        if (!benutzerFormular.getPasswort().isEmpty() || !benutzerFormular.getPasswortWiederholung().isEmpty()) {
-
-            if (!benutzerFormular.getPasswort().equals(benutzerFormular.getPasswortWiederholung())) {
-                logger.info("Passwort und Wiederholung stimmen nicht überein für {}", loginName);
-                bindingResult.rejectValue(
-                "passwortWiederholung",
-                "benutzer.fehler.passwortwiederholung",
-                "Passworteingaben stimmen nicht überein"
-        );
-    }
-}
-
-        // If validation failed, return the form view so errors can be shown
-        if (bindingResult.hasErrors()) {
-            logger.info("Validation errors: {}", bindingResult.getAllErrors());
-            model.addAttribute("loginname", loginName);
-            model.addAttribute("formular", benutzerFormular);
-            return "benutzer/bearbeiten";
-        }
-
-        // update in the Map
-        benutzerFormularMap.put(loginName, benutzerFormular);
-
-        model.addAttribute("loginname", loginName);
-        model.addAttribute("formular", benutzerFormular);
-
-        return "benutzer/bearbeiten";
-    }*/
 
     // POST Handler
     @PostMapping("/admin/benutzer/{loginname}")
