@@ -1,13 +1,19 @@
 package de.hsrm.mi.web.projekt.entities.benutzer;
 
 import de.hsrm.mi.web.projekt.benutzer.validators.GutesPasswort;
+import de.hsrm.mi.web.projekt.entities.anzeige.Anzeige;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
@@ -40,7 +46,15 @@ public class Benutzer {
   @Version
   private long version;
 
-  public Benutzer() {
+
+@OneToMany(mappedBy = "anbieter", cascade = CascadeType.REMOVE, orphanRemoval = true)
+private Collection<Anzeige> anzeigen = new HashSet<>();
+
+
+@ManyToMany(mappedBy = "besteller")
+private Collection<Anzeige> bestellungen = new HashSet<>();
+
+  public Benutzer() { // to be removed later
   }
 
 
@@ -132,6 +146,30 @@ public class Benutzer {
   @Override
   public int hashCode() {
     return Objects.hash(loginName);
+  }
+
+
+
+  public Collection<Anzeige> getAnzeigen() {
+    return anzeigen;
+  }
+
+
+
+  public void setAnzeigen(Collection<Anzeige> anzeigen) {
+    this.anzeigen = anzeigen;
+  }
+
+
+
+  public Collection<Anzeige> getBestellungen() {
+    return bestellungen;
+  }
+
+
+
+  public void setBestellungen(Collection<Anzeige> bestellungen) {
+    this.bestellungen = bestellungen;
   }
 
 

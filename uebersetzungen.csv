@@ -11,7 +11,7 @@ benutzer.losungwh;Repeat password;Passwort (Wiederh.);Wachtwoord (herhaling)
 benutzer.fehler.passwortungeeignet;password suboptimal;Passwort ist nicht entsprechend;dit wachtwoord is echt ongeschikt
 benutzer.fehler.passwortwiederholung;passwords do not match;Passworteingaben stimmen nicht überein;wachtwoorden verschillen onderling
 benutzer.bearbeiten.titel;Edit user {0};Benutzer {0} bearbeiten;Gebruikersprofiel {0} bewerken
-
+;;;
 benutzer.liste.titel;User List;Benutzerliste;Lijst van alle gebruikers
 benutzer.liste.spalte.loginname;Login;Login;Inlognaam
 benutzer.liste.spalte.name;Name;Name;Naam
@@ -19,7 +19,31 @@ benutzer.liste.spalte.email;E-Mail;E-Mail;E-mailadres
 benutzer.liste.spalte.rolle;Role;Rolle;Rol
 benutzer.liste.spalte.bearbeiten;edit;bearbeiten;bewerken
 benutzer.liste.spalte.loeschen;delete;löschen;wissen
-
+;;;
 benutzer.liste.zeile.ok;ok;ok;ok
 benutzer.liste.zeile.abbrechen;cancel;abbrechen;annuleren
-
+;;;
+kopf.anzeigen;Ads;Anzeigen;Advertanties
+kopf.benutzer;Users;Benutzer;Gebruikers
+;;;
+anzeige.liste.titel;Ads;Anzeigen;Advertanties
+anzeige.liste.spalte.anbietername;supplier;Anbieter;aanbieder
+anzeige.liste.spalte.titel;title;Titel;Aanduiding
+anzeige.liste.spalte.preis;price;Preis;prijs
+anzeige.liste.spalte.anzahl;Stock Level;Anzahl;aantal
+anzeige.liste.spalte.bestellt;ordered;bestellt;besteld
+anzeige.liste.spalte.ablaufdatum;valid until;Ablaufdatum;geldig tot
+anzeige.liste.spalte.loeschen;delete;löschen;wissen
+anzeige.liste.spalte.bearbeiten;edit;bearbeiten;bewerken
+anzeige.liste.neuanzeige;new ad;Neue Anzeige;nieuwe advertantie
+;;;
+anzeige.bearbeiten.titel;Edit ad {0};Anzeige {0} bearbeiten;Advertantie {0} bewerken
+anzeige.bearbeiten.neu.titel;Create new ad;Neue Anzeige anlegen;Nieuwe advertantie creëeren
+anzeige.bearbeitten.anbieter;supplier;Anbieter;aanbieder
+anzeige.bearbeiten.titel;title;Titel;Aanduiding
+anzeige.bearbeiten.beschreibung;description;Beschreibung;Beschrijving
+anzeige.bearbeiten.preis;price;Preis;prijs
+anzeige.bearbeiten.anzahl;stock level;Anzahl;aantal
+anzeige.bearbeiten.ablaufdatum;valid until;Ablaufdatum;geldig tot
+anzeige.bearbeiten.ok;ok;ok;ok
+anzeige.bearbeiten.abbrechen;cancel;abbrechen;annuleren
