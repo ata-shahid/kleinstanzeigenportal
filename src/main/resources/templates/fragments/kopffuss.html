@@ -10,7 +10,18 @@
         </div>
         <div class="navbar">
           <div class="nav-links">
-            <a class="benutzer-link" th:href="@{/admin/benutzer}">Benutzer</a>
+            <a
+              class="benutzer-link"
+              th:text="#{kopf.benutzer}"
+              th:href="@{/admin/benutzer}"
+              >Benutzer</a
+            >
+            <a
+              class="benutzer-link"
+              th:text="#{kopf.anzeigen}"
+              th:href="@{/admin/anzeige}"
+              >Anzeige</a
+            >
           </div>
           <div class="langs">
             <a th:href="@{?sprache=de}">DE</a>

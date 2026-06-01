@@ -15,6 +15,9 @@ public interface BenutzerMapper {
 
   // Benutzer-Entitaet aus Formularinhalt fuellen
   @Mapping(target = "loginName", ignore = true)
+  @Mapping(target = "version", ignore = true)
+  @Mapping(target = "anzeigen", ignore = true)
+  @Mapping(target = "bestellungen", ignore = true)
   Benutzer benutzerFormularToBenutzer(BenutzerFormular formular);
 
 }

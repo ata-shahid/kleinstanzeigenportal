@@ -1,0 +1,68 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="#{anzeige.liste.titel}">Anzeigenliste</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css" />
+  </head>
+  <body data-layout="wide">
+    <header th:replace="~{fragments/kopffuss :: kopf}"></header>
+    <div class="main-container">
+      <h1 th:text="#{anzeige.liste.titel}">Anzeigenliste</h1>
+
+      <table class="anzeige-table">
+        <thead>
+          <tr>
+            <th th:text="#{anzeige.liste.spalte.anbietername}">Anbietername</th>
+            <th th:text="#{anzeige.liste.spalte.titel}">Titel</th>
+            <th th:text="#{anzeige.liste.spalte.preis}">Preis</th>
+            <th th:text="#{anzeige.liste.spalte.anzahl}">Anzahl</th>
+            <th th:text="#{anzeige.liste.spalte.bestellt}">Bestellt</th>
+            <th th:text="#{anzeige.liste.spalte.ablaufdatum}">Ablaufdatum</th>
+
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="anzeige : ${anzeigeliste}">
+            <td
+              th:text="${anzeige.anbieter != null ? anzeige.anbieter.name : '(unbekannt)'}"
+            >
+              Anbietername
+            </td>
+            <td th:text="${anzeige.titel}">Titel</td>
+            <td th:text="${anzeige.preis}">Preis</td>
+            <td th:text="${anzeige.anzahl}">Anzahl</td>
+            <td th:text="${#lists.size(anzeige.besteller)}">Bestellt</td>
+            <td th:text="${#temporals.format(anzeige.ablaufdatum, 'dd.MM.yyyy')}">Ablaufdatum</td>
+            <td class="action-buttons">
+              <a
+                th:href="@{/admin/anzeige/{id}(id=${anzeige.id})}"
+                th:text="#{anzeige.liste.spalte.bearbeiten}"
+                class="edit-btn"
+                >bearbeiten</a
+              >
+              <a
+                th:href="@{/admin/anzeige/{id}/delete(id=${anzeige.id})}"
+                th:text="#{anzeige.liste.spalte.loeschen}"
+                class="delete-btn"
+                >löschen</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="neue-anzeige-row">
+        <a
+          th:href="@{/admin/anzeige/0}"
+          th:text="#{anzeige.liste.neuanzeige}"
+          class="neue-anzeige-btn"
+          >Neue Anzeige</a
+        >
+      </div>
+    </div>
+    <footer th:replace="~{fragments/kopffuss :: fuss}"></footer>
+  </body>
+</html>

@@ -37,7 +37,7 @@ anzeige.liste.spalte.loeschen;delete;löschen;wissen
 anzeige.liste.spalte.bearbeiten;edit;bearbeiten;bewerken
 anzeige.liste.neuanzeige;new ad;Neue Anzeige;nieuwe advertantie
 ;;;
-anzeige.bearbeiten.titel;Edit ad {0};Anzeige {0} bearbeiten;Advertantie {0} bewerken
+anzeige.bearbeiten.seitentitel;Edit ad {0};Anzeige {0} bearbeiten;Advertantie {0} bewerken
 anzeige.bearbeiten.neu.titel;Create new ad;Neue Anzeige anlegen;Nieuwe advertantie creëeren
 anzeige.bearbeitten.anbieter;supplier;Anbieter;aanbieder
 anzeige.bearbeiten.titel;title;Titel;Aanduiding
