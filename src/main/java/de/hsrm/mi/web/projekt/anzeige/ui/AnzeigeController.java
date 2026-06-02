@@ -23,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import jakarta.validation.Valid;
 
 
+
 @Controller
 @SessionAttributes("anzeigeVersion")
 public class AnzeigeController {
@@ -82,6 +83,15 @@ public class AnzeigeController {
         logger.info("Deleted Anzeige with id: {}", id);
         return "redirect:/admin/anzeige";
     }
+
+    //GET Handler to show the Verlosung
+    @GetMapping("/admin/anzeige/verlosung")
+    public String verlosung(String verlosung) {
+        logger.info("GET /admin/anzeige/verlosung");
+        anzeigeService.verlosen();
+        return "redirect:/admin/anzeige";
+    }
+
 
     // POST Handler
     @PostMapping("/admin/anzeige/{id}")

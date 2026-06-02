@@ -1,5 +1,8 @@
 package de.hsrm.mi.web.projekt.benutzer.ui;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import de.hsrm.mi.web.projekt.entities.anzeige.Anzeige;
 import de.hsrm.mi.web.projekt.entities.benutzer.Benutzer;
 import de.hsrm.mi.web.projekt.entities.benutzer.mapper.BenutzerMapper;
 import de.hsrm.mi.web.projekt.entities.benutzer.services.BenutzerService;
@@ -54,6 +58,9 @@ public class BenutzerController {
         logger.info("User found in database: {}", loginName);
         formular = benutzerMapper.benutzerToBenutzerFormular(benutzer.get());
         model.addAttribute("benutzerVersion", benutzer.get().getVersion());
+        List<Anzeige> bestellungen = new ArrayList<>(benutzer.get().getBestellungen());
+        bestellungen.sort(Comparator.comparing(Anzeige::getTitel));
+        model.addAttribute("bestellungen", bestellungen);
         } else {
         logger.info("User not found, creating empty form for: {}", loginName);
         model.addAttribute("benutzerVersion", 0L);
