@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.hsrm.mi.web.projekt.entities.anzeige.Anzeige;
@@ -88,6 +90,80 @@ public class BenutzerController {
     benutzerService.deleteBenutzerById(loginName);
     logger.info("Deleted user: {}", loginName);
     return "redirect:/admin/benutzer";
+}
+@GetMapping("/admin/benutzer/{loginName}/hx/feld/{feldname}")
+public String hxGetFeld(
+        @PathVariable("loginName") String loginName,
+        @PathVariable("feldname") String feldname,
+        Model model) {
+
+    logger.info("GET /admin/benutzer/{}/hx/feld/{}", loginName, feldname);
+    Benutzer benutzer = benutzerService.findBenutzerById(loginName)
+        .orElseThrow(() -> new BenutzerException("Benutzer nicht gefunden: " + loginName));
+
+    String wert = switch (feldname) {
+        case "name" -> benutzer.getName();
+        case "email" -> benutzer.getEmail();
+        default -> "";
+    };
+
+    model.addAttribute("loginName", loginName);
+    model.addAttribute("feldname", feldname);
+    model.addAttribute("wert", wert);
+
+    return "benutzer/eingabefeld :: bearbeiten";
+}
+
+@PutMapping("/admin/benutzer/{loginName}/hx/feld/{feldname}")
+public String hxPutFeld(
+        @PathVariable("loginName") String loginName,
+        @PathVariable("feldname") String feldname,
+        @RequestParam("wert") String wert,
+        Model model) {
+
+    logger.info("PUT /admin/benutzer/{}/hx/feld/{} wert='{}'", loginName, feldname, wert);
+
+    try {
+        Benutzer benutzer = benutzerService.aktualisiereBenutzerAttribut(loginName, feldname, wert);
+
+        String aktuellerWert = switch (feldname) {
+            case "name" -> benutzer.getName();
+            case "email" -> benutzer.getEmail();
+            default -> "";
+        };
+
+        logger.info("PUT /admin/benutzer/{}/hx/feld/{} -> gespeichert", loginName, feldname);
+        model.addAttribute("loginName", loginName);
+        model.addAttribute("feldname", feldname);
+        model.addAttribute("wert", aktuellerWert);
+
+        return "benutzer/eingabefeld :: ausgeben";
+
+    } catch (Exception e) {
+        logger.warn("PUT /admin/benutzer/{}/hx/feld/{} -> Fehler: {}", loginName, feldname, e.getMessage());
+
+        Benutzer benutzer = benutzerService.findBenutzerById(loginName)
+            .orElseThrow(() -> new BenutzerException("Benutzer nicht gefunden: " + loginName));
+
+        String aktuellerWert = switch (feldname) {
+            case "name" -> benutzer.getName();
+            case "email" -> benutzer.getEmail();
+            default -> "";
+        };
+
+        String fehlermeldung = switch (feldname) {
+            case "name" -> "Größe muss zwischen 3 und 60 sein";
+            case "email" -> "Muss eine korrekt formatierte E-Mail-Adresse sein";
+            default -> "Ungültiger Wert";
+        };
+
+        model.addAttribute("loginName", loginName);
+        model.addAttribute("feldname", feldname);
+        model.addAttribute("wert", aktuellerWert);
+        model.addAttribute("fehlermeldung", fehlermeldung);
+
+        return "benutzer/eingabefeld :: bearbeiten";
+    }
 }
 
     // POST Handler

@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title th:text="#{benutzer.liste.titel}">Benutzerliste</title>
     <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
+      integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"
+      crossorigin="anonymous"
+    ></script>
   </head>
-  <body>
+  <body data-layout="wide">
     <header th:replace="~{fragments/kopffuss :: kopf}"></header>
     <div class="main-container">
       <h1 th:text="#{benutzer.liste.titel}">Benutzerliste</h1>
@@ -24,8 +29,12 @@
         <tbody>
           <tr th:each="benutzer : ${benutzerliste}">
             <td th:text="${benutzer.loginName}">loginname</td>
-            <td th:text="${benutzer.name}">Name</td>
-            <td th:text="${benutzer.email}">email</td>
+            <td
+              th:replace="~{benutzer/eingabefeld :: ausgeben(loginName=${benutzer.loginName},feldname='name',wert=${benutzer.name})}"
+            ></td>
+            <td
+              th:replace="~{benutzer/eingabefeld :: ausgeben(loginName=${benutzer.loginName},feldname='email',wert=${benutzer.email})}"
+            ></td>
             <td th:text="${benutzer.rolle}">Rolle</td>
             <td class="action-buttons">
               <a

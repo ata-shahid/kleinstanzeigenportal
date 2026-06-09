@@ -7,9 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.hsrm.mi.web.projekt.entities.benutzer.Benutzer;
 import de.hsrm.mi.web.projekt.entities.benutzer.BenutzerRepository;
+import de.hsrm.mi.web.projekt.benutzer.ui.BenutzerException;
 
 @Service
 public class BenutzerServiceImpl implements BenutzerService {
@@ -52,5 +54,21 @@ public class BenutzerServiceImpl implements BenutzerService {
     benutzerRepository.deleteById(loginName);
     logger.info("deleteBenutzerById({}) done", loginName);
   }
+  @Override
+  @Transactional
+  public Benutzer aktualisiereBenutzerAttribut(String loginName, String feldname, String wert) {
+    logger.info("aktualisiereBenutzerAttribut({}, {}, {})", loginName, feldname, wert);
+    Benutzer benutzer = benutzerRepository.findById(loginName)
+        .orElseThrow(() -> new BenutzerException("Benutzer nicht gefunden: " + loginName));
+
+    switch (feldname) {
+        case "name" -> benutzer.setName(wert);
+        case "email" -> benutzer.setEmail(wert);
+    }
+
+    Benutzer saved = benutzerRepository.save(benutzer);
+    logger.info("aktualisiereBenutzerAttribut({}, {}) -> gespeichert", loginName, feldname);
+    return saved;
+}
 
 }

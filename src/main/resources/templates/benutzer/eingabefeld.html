@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+  <body>
+    <!-- Fragment 1: Normal display -->
+    <td th:fragment="ausgeben(loginName, feldname, wert)">
+      <span
+        th:text="${wert}"
+        th:hx-get="@{/admin/benutzer/{ln}/hx/feld/{fn}(ln=${loginName},fn=${feldname})}"
+        hx-target="closest td"
+        hx-swap="outerHTML"
+      >
+      </span>
+    </td>
+
+    <!-- Fragment 2: Edit form -->
+    <td th:fragment="bearbeiten(loginName, feldname, wert)">
+      <form>
+        <div class="hx-inline-form">
+          <input
+            type="text"
+            name="wert"
+            th:value="${wert}"
+            th:classappend="${fehlermeldung != null} ? 'error-field'"
+          />
+          <button
+            class="hx-ok-btn"
+            type="button"
+            th:hx-put="@{/admin/benutzer/{ln}/hx/feld/{fn}(ln=${loginName},fn=${feldname})}"
+            hx-target="closest td"
+            hx-swap="outerHTML"
+            hx-include="closest form"
+          >
+            OK
+          </button>
+        </div>
+        <span
+          class="error-text"
+          th:if="${fehlermeldung != null}"
+          th:text="${fehlermeldung}"
+        >Speichern fehlgeschlagen</span>
+      </form>
+    </td>
+  </body>
+</html>

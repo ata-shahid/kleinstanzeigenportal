@@ -1,4 +1,6 @@
 package de.hsrm.mi.web.projekt.entities.anzeige.mapper;
+import de.hsrm.mi.web.projekt.anzeige.api.AnzeigeDTO;
+import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,6 +19,15 @@ public interface AnzeigeMapper {
   @Mapping(target = "anbieter", ignore = true)
   @Mapping(target = "besteller", ignore = true)
   Anzeige anzeigeFormularToAnzeige(AnzeigeFormular formular);
+
+  // Anzeige entity to AnzeigeDTO
+  @Mapping(target = "anbieterName", source = "anbieter.name")
+  @Mapping(target = "anbieterAdresse", source = "anbieter.adresse")
+  @Mapping(target = "verfuegbar", expression = "java(anzeige.getAnzahl() - anzeige.getBesteller().size())")
+  AnzeigeDTO anzeigeToAnzeigeDTO(Anzeige anzeige);
+
+  // List<Anzeige> to List<AnzeigeDTO>
+  List<AnzeigeDTO> anzeigeListToAnzeigeDTOList(List<Anzeige> anzeigen);
 
 
 }
