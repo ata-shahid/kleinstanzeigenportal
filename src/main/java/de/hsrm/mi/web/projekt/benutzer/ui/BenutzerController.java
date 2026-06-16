@@ -23,6 +23,8 @@ import de.hsrm.mi.web.projekt.entities.anzeige.Anzeige;
 import de.hsrm.mi.web.projekt.entities.benutzer.Benutzer;
 import de.hsrm.mi.web.projekt.entities.benutzer.mapper.BenutzerMapper;
 import de.hsrm.mi.web.projekt.entities.benutzer.services.BenutzerService;
+import de.hsrm.mi.web.projekt.geo.GeoAdresse;
+import de.hsrm.mi.web.projekt.geo.GeoService;
 
 import org.springframework.validation.BindingResult;
 
@@ -39,12 +41,14 @@ public class BenutzerController {
 
      private final BenutzerService benutzerService;
      private final BenutzerMapper benutzerMapper;
+     private final GeoService geoService;
 
 
-     public BenutzerController(BenutzerService benutzerService, BenutzerMapper benutzerMapper){
+     public BenutzerController(BenutzerService benutzerService, BenutzerMapper benutzerMapper, GeoService geoService){
 
         this.benutzerService=benutzerService;
         this.benutzerMapper=benutzerMapper;
+        this.geoService=geoService;
      }
 
     //GET Handler to Show User Form
@@ -192,6 +196,25 @@ public String hxPutFeld(
         );
     }
 }
+
+        // Adressüberprüfung nur bei Neuanlage (Benutzer noch nicht in DB vorhanden)
+        boolean istNeuerBenutzer = benutzerService.findBenutzerById(loginName).isEmpty();
+        if (istNeuerBenutzer && !benutzerFormular.getAdresse().isEmpty()) {
+            logger.info("Geo-Adressüberprüfung für neuen Benutzer {}: '{}'", loginName, benutzerFormular.getAdresse());
+            List<GeoAdresse> geoAdressen = geoService.findeAdressen(benutzerFormular.getAdresse());
+            if (geoAdressen.isEmpty()) {
+                logger.info("Keine Geo-Adresse gefunden für '{}', Formularfeld wird als fehlerhaft markiert", benutzerFormular.getAdresse());
+                bindingResult.rejectValue(
+                    "adresse",
+                    "benutzer.fehler.adresse",
+                    "Die eingegebene Adresse konnte nicht gefunden werden"
+                );
+            } else {
+                String displayName = geoAdressen.get(0).display_name();
+                logger.info("Geo-Adresse gefunden: '{}', ersetze Adresse durch display_name: '{}'", benutzerFormular.getAdresse(), displayName);
+                benutzerFormular.setAdresse(displayName);
+            }
+        }
 
         // If validation failed, return the form view so errors can be shown
         if (bindingResult.hasErrors()) {

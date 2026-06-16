@@ -43,7 +43,12 @@
 
         <div class="form-row">
           <label for="adresse" th:text="#{benutzer.adresse}">Adresse</label>
-          <input type="text" th:field="*{adresse}" />
+          <input type="text" th:field="*{adresse}" th:errorclass="error-field" />
+          <span
+            class="error-text"
+            th:if="${#fields.hasErrors('adresse')}"
+            th:errors="*{adresse}"
+          ></span>
         </div>
 
         <div class="form-row">
