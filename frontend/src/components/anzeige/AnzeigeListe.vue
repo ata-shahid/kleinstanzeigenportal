@@ -7,6 +7,7 @@
         <th>Preis</th>
         <th>Verfügbarkeit</th>
         <th>Ablaufdatum</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
