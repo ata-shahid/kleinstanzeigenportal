@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import AnzeigeListeView from './views/AnzeigeListeView.vue'
 
 const info = ref('Beachten Sie unseren aktuellen Anzeigen mit Sonderangeboten zur Ball-WM')
 </script>
@@ -28,7 +29,7 @@ const info = ref('Beachten Sie unseren aktuellen Anzeigen mit Sonderangeboten zu
   </div>
 
   <main class="main-container">
-    <div></div>
+    <AnzeigeListeView />
   </main>
 
   <footer class="fuss">
@@ -65,5 +66,8 @@ const info = ref('Beachten Sie unseren aktuellen Anzeigen mit Sonderangeboten zu
   color: black;
   font-size: 1rem;
   font-weight: bold;
+}
+.main-container {
+  background-color: transparent;
 }
 </style>
