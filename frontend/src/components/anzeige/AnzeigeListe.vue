@@ -7,7 +7,7 @@
         <th>Preis</th>
         <th>Verfügbarkeit</th>
         <th>Ablaufdatum</th>
-        <th></th>
+        <th class="btn-col"></th>
       </tr>
     </thead>
     <tbody>
@@ -43,5 +43,9 @@ td {
 th {
   background-color: #f2f2f2;
   font-weight: 600;
+}
+
+.btn-col {
+  width: 3rem;
 }
 </style>
