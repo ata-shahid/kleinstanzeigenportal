@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IAnzeigeDTD } from '@/views/AnzeigeListeView.vue'
+import type { IAnzeigeDTD } from '@/stores/IAnzeige'
 import AnzeigeListeZeile from './AnzeigeListeZeile.vue'
 
 defineProps<{ anzeigen: IAnzeigeDTD[] }>()

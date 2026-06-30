@@ -3,78 +3,45 @@
     <div>
       <h2 class="title">Unsere aktuellen Anzeigen</h2>
     </div>
+    <div class="suchleiste">
+      <input
+        id="suchfeld"
+        v-model="suchstring"
+        type="text"
+        placeholder="Suche nach Titel oder Beschreibung …"
+        class="suchfeld"
+      />
+      <button class="reset-btn" @click="suchstring = ''">Reset</button>
+    </div>
     <div>
-      <AnzeigeListe :anzeigen="liste"></AnzeigeListe>
+      <AnzeigeListe :anzeigen="gefilterteListe" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import AnzeigeListe from '@/components/anzeige/AnzeigeListe.vue'
+import { useAnzeigeStore } from '@/stores/anzeigestore'
 
-export interface IAnzeigeDTD {
-  id: number
-  titel: string
-  beschreibung: string
-  preis: number
-  anzahl: number
-  verfuegbar: number
-  ablaufdatum: string
-  anbieterName: string
-  anbieterAdresse: string
-}
+const anzeigeStore = useAnzeigeStore()
 
-const liste = ref<IAnzeigeDTD[]>(
-  JSON.parse(`
-[
-  {
-    "id": 1,
-    "titel": "Orangenhammer",
-    "beschreibung": "Ein Hammer, der Orangen zerschmettert, und das gründlich.",
-    "preis": 10,
-    "anzahl": 20,
-    "verfuegbar": 17,
-    "ablaufdatum": "2026-08-17",
-    "anbieterName": "Joghurta Biffel",
-    "anbieterAdresse": "An der Ecke, Vollradisroda"
-  },
-  {
-    "id": 2,
-    "titel": "Bananenbrecher",
-    "beschreibung": "Ein Gerät, das Bananen in Scheiben schneidet, ideal für Obstsalate.",
-    "preis": 15,
-    "anzahl": 30,
-    "verfuegbar": 25,
-    "ablaufdatum": "2026-09-01",
-    "anbieterName": "Trubert vom Senkel",
-    "anbieterAdresse": "Obstweg 5, Fruchtstadt"
-  },
-  {
-    "id": 3,
-    "titel": "Apfelzertrümmerer",
-    "beschreibung": "Ein robustes Werkzeug, das Äpfel in Stücke zerschmettert, perfekt für Apfelmus.",
-    "preis": 20,
-    "anzahl": 10,
-    "verfuegbar": 8,
-    "ablaufdatum": "2026-10-15",
-    "anbieterName": "Jöndhard Biffel",
-    "anbieterAdresse": "Kernstraße 12, Apfelhausen"
-  },
-  {
-    "id": 4,
-    "titel": "Traubenzerquetscher",
-    "beschreibung": "Ein praktisches Gerät, das Trauben zerquetscht, ideal für die Weinherstellung.",
-    "preis": 25,
-    "anzahl": 15,
-    "verfuegbar": 12,
-    "ablaufdatum": "2026-11-30",
-    "anbieterName": "Kees van Bommelding",
-    "anbieterAdresse": "Weinstraße 8, Traubendorf"
+onMounted(() => {
+  anzeigeStore.updateAnzeigeListe()
+})
+
+const suchstring = ref('')
+
+const gefilterteListe = computed(() => {
+  const term = suchstring.value.toLowerCase()
+  if (term === '') {
+    return anzeigeStore.anzeigedata.anzeigeliste
   }
-]
-`),
-)
+  return anzeigeStore.anzeigedata.anzeigeliste.filter(
+    (a) =>
+      a.titel.toLowerCase().includes(term) || a.beschreibung.toLowerCase().includes(term),
+  )
+})
 </script>
 
 <style scoped>
@@ -83,5 +50,40 @@ const liste = ref<IAnzeigeDTD[]>(
   font-weight: 600;
   color: #2c3e50;
   margin-bottom: 0.5rem;
+}
+
+.suchleiste {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.suchfeld {
+  flex: 1;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.suchfeld:focus {
+  border-color: #3b82f6;
+}
+
+.reset-btn {
+  padding: 0.45rem 1rem;
+  background-color: #e5e7eb;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.reset-btn:hover {
+  background-color: #d1d5db;
 }
 </style>

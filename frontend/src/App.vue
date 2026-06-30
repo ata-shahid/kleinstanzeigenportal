@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import AnzeigeListeView from './views/AnzeigeListeView.vue'
+import { RouterView, RouterLink } from 'vue-router'
+import { useInfo } from '@/composables/useInfo'
+import { useLoginStore } from '@/stores/loginstore'
 
-const info = ref('Beachten Sie unseren aktuellen Anzeigen mit Sonderangeboten zur Ball-WM')
+const { info, loescheInfo } = useInfo()
+const { loginState } = useLoginStore()
 </script>
 
 <template>
@@ -13,8 +15,10 @@ const info = ref('Beachten Sie unseren aktuellen Anzeigen mit Sonderangeboten zu
       </div>
       <div class="navbar">
         <div class="nav-links">
-          <a class="benutzer-link" href="/admin/benutzer">Benutzer</a>
-          <a class="benutzer-link" href="/admin/anzeige">Anzeige</a>
+          <RouterLink v-if="loginState.loggedIn" class="benutzer-link" to="/anzeige">
+            Anzeigen
+          </RouterLink>
+          <RouterLink class="benutzer-link benutzer-link--login" to="/login">Login</RouterLink>
         </div>
       </div>
     </div>
@@ -25,16 +29,21 @@ const info = ref('Beachten Sie unseren aktuellen Anzeigen mit Sonderangeboten zu
       <strong>Info</strong>
       <p>{{ info }}</p>
     </div>
-    <button v-on:click="info = ''" aria-label="Meldung schließen">✕</button>
+    <button aria-label="Meldung schließen" @click="loescheInfo()">✕</button>
   </div>
 
   <main class="main-container">
-    <AnzeigeListeView />
+    <RouterView />
   </main>
 
   <footer class="fuss">
     <div class="fuss-container">
-      <p class="fuss-text">&copy; 2026 Webbasierte Anwendungen. All rights reserved.</p>
+      <p class="fuss-text">
+        © 2026 Webbasierte Anwendungen. All rights reserved.
+        <span v-if="loginState.username" class="fuss-user">
+          Eingeloggt als: <strong>{{ loginState.username }}</strong>
+        </span>
+      </p>
     </div>
   </footer>
 </template>
@@ -67,7 +76,23 @@ const info = ref('Beachten Sie unseren aktuellen Anzeigen mit Sonderangeboten zu
   font-size: 1rem;
   font-weight: bold;
 }
+
 .main-container {
   background-color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.benutzer-link--login {
+  margin-left: auto;
+}
+
+.fuss-user {
+  margin-left: 1rem;
+  font-size: 0.9rem;
 }
 </style>

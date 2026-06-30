@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import type { IAnzeigeDTD } from '@/views/AnzeigeListeView.vue'
+import type { IAnzeigeDTD } from '@/stores/IAnzeige'
 
 const props = defineProps<{ anzeige: IAnzeigeDTD }>()
 
