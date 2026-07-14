@@ -1,6 +1,7 @@
 <!-- Kopf und Fuss Fragments-->
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <body>
     <!--Kopf fragment-->
     <header th:fragment="kopf" class="kopf">
@@ -10,7 +11,9 @@
         </div>
         <div class="navbar">
           <div class="nav-links">
+            <!-- "Benutzer" link only visible for ADMINISTRATOR role -->
             <a
+              sec:authorize="hasRole('ADMINISTRATOR')"
               class="benutzer-link"
               th:text="#{kopf.benutzer}"
               th:href="@{/admin/benutzer}"
@@ -22,6 +25,8 @@
               th:href="@{/admin/anzeige}"
               >Anzeige</a
             >
+            <!-- Logout link -->
+            <a class="benutzer-link logout-link" th:href="@{/logout}">Logout</a>
           </div>
           <div class="langs">
             <a th:href="@{?sprache=de}">DE</a>
@@ -40,6 +45,8 @@
       <div class="fuss-container">
         <p class="fuss-text">
           &copy; 2026 Webbasierte Anwendungen. All rights reserved.
+          <!-- Show the logged-in username from Spring Security -->
+          <span sec:authentication="name" class="fuss-user"></span>
         </p>
       </div>
     </footer>

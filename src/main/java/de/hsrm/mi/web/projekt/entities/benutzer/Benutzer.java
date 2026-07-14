@@ -1,6 +1,5 @@
 package de.hsrm.mi.web.projekt.entities.benutzer;
 
-import de.hsrm.mi.web.projekt.benutzer.validators.GutesPasswort;
 import de.hsrm.mi.web.projekt.entities.anzeige.Anzeige;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -37,7 +36,6 @@ public class Benutzer {
   @NotBlank
   private String rolle;
 
-  @GutesPasswort
   @NotBlank
   private String passwort;
 

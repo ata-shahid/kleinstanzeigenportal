@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import de.hsrm.mi.web.projekt.entities.anzeige.Anzeige;
 import de.hsrm.mi.web.projekt.entities.benutzer.Benutzer;
 import de.hsrm.mi.web.projekt.entities.benutzer.mapper.BenutzerMapper;
@@ -42,13 +44,15 @@ public class BenutzerController {
      private final BenutzerService benutzerService;
      private final BenutzerMapper benutzerMapper;
      private final GeoService geoService;
+     private final PasswordEncoder passwordEncoder;
 
 
-     public BenutzerController(BenutzerService benutzerService, BenutzerMapper benutzerMapper, GeoService geoService){
+     public BenutzerController(BenutzerService benutzerService, BenutzerMapper benutzerMapper, GeoService geoService, PasswordEncoder passwordEncoder){
 
         this.benutzerService=benutzerService;
         this.benutzerMapper=benutzerMapper;
         this.geoService=geoService;
+        this.passwordEncoder=passwordEncoder;
      }
 
     //GET Handler to Show User Form
@@ -235,12 +239,17 @@ public String hxPutFeld(
                 logger.warn("Password is empty for the username: {}", loginName);
                 Optional<Benutzer> existingUser = benutzerService.findBenutzerById(loginName);
                 if (existingUser.isPresent()) {
-                    benutzer.setPasswort(existingUser.get().getPasswort());
-                    logger.info("Password unchanged for the exisiting user:{}", loginName);
+                    benutzer.setPasswort(existingUser.get().getPasswort()); // keep existing encoded hash
+                    logger.info("Password unchanged for the existing user:{}", loginName);
                 } else {
                     logger.error("New user without password is not allowed!");
                     throw new BenutzerException("Fehler: Neuer Benutzer ohne Passwort ist nicht erlaubt");
                 }
+            } else {
+                // Encode the plain-text password before persisting
+                String encodedPassword = passwordEncoder.encode(benutzerFormular.getPasswort());
+                benutzer.setPasswort(encodedPassword);
+                logger.info("Password encoded for user: {}", loginName);
             }
 
             try {
